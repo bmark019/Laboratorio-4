@@ -6,6 +6,7 @@ Escriban debajo de cada pregunta. (Se evalúa después; el autograde no califica
 
 ---
 
+
 ## VERSIÓN A
 
 **A1.** `aplicarFactor` modifica el arreglo original, pero `copiaEscalada` no. Expliquen por qué, y qué es lo que
