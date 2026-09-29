@@ -4,7 +4,7 @@
 y **citando nombres de métodos o líneas de SU código**. Las respuestas genéricas o iguales a las de otro grupo se califican en 0.
 Escriban debajo de cada pregunta. (Se evalúa después; el autograde no califica este archivo.)
 
----
+--- 
 
 
 ## VERSIÓN A
