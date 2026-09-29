@@ -1,132 +1,165 @@
 /**
  * LABORATORIO: Metodos en Java - Medicion y facturacion de energia electrica.
  *
- * Completen cada metodo (quiten el "TODO" y escriban la logica).
- * NO cambien los nombres, tipos de parametros ni tipos de retorno: el autograde
- * los busca exactamente con esa firma.
- *
- * Los valores que dependen de su VERSION (A o B) estan en la tabla del README.
+ * Version A
  */
 public class Calculos {
 
-    // ---------------------------------------------------------------
-    // CONSTANTES DE SU VERSION (ver tabla en el README) - cambienlas
-    // ---------------------------------------------------------------
-    public static final double VOLTAJE_MIN = 0;   // TODO segun su version
-    public static final double VOLTAJE_MAX = 0;   // TODO segun su version
-    public static final double TARIFA_BASE = 0;   // TODO segun su version ($/kWh)
-    public static final double LIMITE_BAJO = 0;   // TODO segun su version (kWh)
-    public static final double LIMITE_MEDIO = 0;  // TODO segun su version (kWh)
-
     // ===============================================================
-    // NIVEL 1 - Declaracion y retorno (basico)
+    // CONSTANTES - VERSION A
     // ===============================================================
 
-    /** Potencia en watts: P = V * I. */
+    public static final double VOLTAJE_MIN = 108;
+    public static final double VOLTAJE_MAX = 132;
+    public static final double TARIFA_BASE = 0.15;
+    public static final double LIMITE_BAJO = 100;
+    public static final double LIMITE_MEDIO = 300;
+
+
+    // ===============================================================
+    // NIVEL 1 - Declaracion y retorno
+    // ===============================================================
+
     public static double calcularPotencia(double voltaje, double corriente) {
-        // TODO
-        return 0;
+        return voltaje * corriente;
     }
 
-    /** true si VOLTAJE_MIN <= voltaje <= VOLTAJE_MAX (extremos incluidos). */
+
     public static boolean esVoltajeSeguro(double voltaje) {
-        // TODO
-        return false;
+        return voltaje >= VOLTAJE_MIN && voltaje <= VOLTAJE_MAX;
     }
 
-    /**
-     * Imprime EXACTAMENTE dos lineas:
-     *   === FACTURA DE ENERGIA ===
-     *   Cliente: <cliente>
-     * (sin tildes). Este metodo no devuelve nada (void).
-     */
+
     public static void imprimirEncabezado(String cliente) {
-        // TODO
+        System.out.println("=== FACTURA DE ENERGIA ===");
+        System.out.println("Cliente: " + cliente);
     }
 
-    /**
-     * "BAJO" si kwh < LIMITE_BAJO; "MEDIO" si kwh < LIMITE_MEDIO; "ALTO" en otro caso.
-     * Ojo: todas las rutas deben terminar en un return.
-     */
+
     public static String clasificarConsumo(double kwh) {
-        // TODO
-        return "";
+
+        if (kwh < LIMITE_BAJO) {
+            return "BAJO";
+        } else if (kwh < LIMITE_MEDIO) {
+            return "MEDIO";
+        } else {
+            return "ALTO";
+        }
     }
 
+
     // ===============================================================
-    // NIVEL 2 - Paso de parametros y arreglos (intermedio)
+    // NIVEL 2 - Paso de parametros y arreglos
     // ===============================================================
 
-    /** Promedio de las lecturas. Si el arreglo esta vacio devuelve 0. */
     public static double promedio(double[] lecturas) {
-        // TODO
-        return 0;
+
+        if (lecturas.length == 0) {
+            return 0;
+        }
+
+        double total = 0;
+
+        for (double lectura : lecturas) {
+            total += lectura;
+        }
+
+        return total / lecturas.length;
     }
 
-    /** MODIFICA el arreglo recibido: multiplica cada lectura por factor. No devuelve nada. */
+
     public static void aplicarFactor(double[] lecturas, double factor) {
-        // TODO
+
+        for (int i = 0; i < lecturas.length; i++) {
+            lecturas[i] = lecturas[i] * factor;
+        }
     }
 
-    /** NO modifica el original: devuelve un arreglo NUEVO con cada lectura * factor. */
+
     public static double[] copiaEscalada(double[] lecturas, double factor) {
-        // TODO
-        return null;
+
+        double[] copia = new double[lecturas.length];
+
+        for (int i = 0; i < lecturas.length; i++) {
+            copia[i] = lecturas[i] * factor;
+        }
+
+        return copia;
     }
 
-    /** Cuenta cuantas lecturas son ESTRICTAMENTE mayores que el umbral. */
+
     public static int contarSobreUmbral(double[] lecturas, double umbral) {
-        // TODO
-        return 0;
+
+        int contador = 0;
+
+        for (double lectura : lecturas) {
+
+            if (lectura > umbral) {
+                contador++;
+            }
+        }
+
+        return contador;
     }
 
+
     // ===============================================================
-    // NIVEL 3 - Sobrecarga (intermedio)
-    // Mismo nombre "calcularCosto", distintos parametros.
+    // NIVEL 3 - Sobrecarga
     // ===============================================================
 
-    /** kwh * TARIFA_BASE */
     public static double calcularCosto(double kwh) {
-        // TODO
-        return 0;
+        return kwh * TARIFA_BASE;
     }
 
-    /** kwh * tarifa */
+
     public static double calcularCosto(double kwh, double tarifa) {
-        // TODO
-        return 0;
+        return kwh * tarifa;
     }
 
-    /** dias * kwhPorDia * tarifa */
+
     public static double calcularCosto(int dias, double kwhPorDia, double tarifa) {
-        // TODO
-        return 0;
+        return dias * kwhPorDia * tarifa;
     }
 
+
     // ===============================================================
-    // NIVEL 5 - Avanzado (varargs y recursion)
-    // (El Nivel 4 esta en Medidor.java)
+    // NIVEL 5 - Varargs y recursion
     // ===============================================================
 
-    /** Resistencia equivalente en SERIE: suma de todas. Sin argumentos devuelve 0. */
     public static double resistenciaSerie(double... resistencias) {
-        // TODO
-        return 0;
+
+        double total = 0;
+
+        for (double resistencia : resistencias) {
+            total += resistencia;
+        }
+
+        return total;
     }
 
-    /** Resistencia equivalente en PARALELO: 1 / (1/R1 + 1/R2 + ...). Sin argumentos devuelve 0. */
+
     public static double resistenciaParalelo(double... resistencias) {
-        // TODO
-        return 0;
+
+        if (resistencias.length == 0) {
+            return 0;
+        }
+
+        double sumaInversos = 0;
+
+        for (double resistencia : resistencias) {
+            sumaInversos += 1 / resistencia;
+        }
+
+        return 1 / sumaInversos;
     }
 
-    /**
-     * Suma de los primeros n elementos del arreglo, usando RECURSION.
-     * Prohibido usar for o while dentro de este metodo.
-     * Caso base: n <= 0 devuelve 0.
-     */
+
     public static double sumaRecursiva(double[] datos, int n) {
-        // TODO
-        return 0;
+
+        if (n <= 0) {
+            return 0;
+        }
+
+        return datos[n - 1] + sumaRecursiva(datos, n - 1);
     }
 }
